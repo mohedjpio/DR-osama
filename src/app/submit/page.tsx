@@ -65,7 +65,7 @@ export default function SubmitPage() {
   const [nameErr, setNameErr]     = useState(false)
   const [msgErr,  setMsgErr]      = useState(false)
 
-  const onDrop = useCallback((accepted: File[], rejected: { file: File; errors: { code: string; message: string }[] }[]) => {
+  const onDrop = useCallback((accepted: File[], rejected: any[]) => {
     setFileErr(null)
     if (rejected.length) { setFileErr('Images only, max 5 MB.'); return }
     setImageFile(accepted[0])
