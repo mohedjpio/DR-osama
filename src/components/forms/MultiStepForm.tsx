@@ -26,7 +26,7 @@ export default function MultiStepForm() {
 
   const { addMemory } = useMemoriesStore()
 
-  const onDrop = useCallback((accepted: File[], rejected: { file: File; errors: { code: string; message: string }[] }[]) => {
+  const onDrop = useCallback((accepted: File[], rejected: import('react-dropzone').FileRejection[]) => {
     setFileError(null)
     if (rejected.length) { setFileError('Images only, max 5 MB.'); return }
     const file = accepted[0]
