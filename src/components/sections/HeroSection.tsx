@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import Image from 'next/image'
 
-const QUOTE = "Some people don't just teach… they change lives."
+const QUOTE = "Some people don&apos;t just teach… they change lives."
 
 export default function HeroSection() {
   const quoteRef = useRef<HTMLHeadingElement>(null)

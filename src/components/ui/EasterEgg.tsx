@@ -1,34 +1,31 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-// The easter egg appears after Konami code or after submitting a memory
+const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a']
+
 export default function EasterEgg() {
   const [visible, setVisible] = useState(false)
-  const keys = useRef<string[]>([])
-  const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a']
-
-  function useRef<T>(init: T) { return { current: init } }
+  const keysRef = useRef<string[]>([])
 
   useEffect(() => {
-    const ref: string[] = []
     const handler = (e: KeyboardEvent) => {
-      ref.push(e.key)
-      if (ref.length > KONAMI.length) ref.shift()
-      if (ref.join(',') === KONAMI.join(',')) {
+      keysRef.current.push(e.key)
+      if (keysRef.current.length > KONAMI.length) keysRef.current.shift()
+      if (keysRef.current.join(',') === KONAMI.join(',')) {
         setVisible(true)
         setTimeout(() => setVisible(false), 6000)
       }
     }
-    window.addEventListener('keydown', handler)
 
-    // Also listen for custom event from form
     const onSuccess = () => {
       setTimeout(() => {
         setVisible(true)
         setTimeout(() => setVisible(false), 6000)
       }, 1200)
     }
+
+    window.addEventListener('keydown', handler)
     window.addEventListener('memory-submitted', onSuccess)
     return () => {
       window.removeEventListener('keydown', handler)
@@ -47,7 +44,7 @@ export default function EasterEgg() {
           transition={{ duration: 0.5 }}
         >
           <p className="font-serif italic text-gold/80 text-sm leading-relaxed">
-            ✦ "You changed more lives than you'll ever know."<br />
+            ✦ &ldquo;You changed more lives than you&apos;ll ever know.&rdquo;<br />
             <span className="text-cream/40 not-italic text-xs mt-1 block">— A grateful student, somewhere.</span>
           </p>
         </motion.div>
